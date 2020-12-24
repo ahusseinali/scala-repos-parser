@@ -1,5 +1,11 @@
 <div>
     <h1>Scala Git Repos Parser</h1>
-    <button class="test-list-loader-btn">Load Git Repos</button>
+    <button 
+        mat-raised-button
+        color="primary"
+        class="test-list-loader-btn"
+        (click)="handleButtonClick()">
+        Load Git Repos
+    </button>
     <p>{{reposDetails}}</p>
 </div>

@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, NgModule } from "@angular/core";
+import {MatButtonModule} from '@angular/material/button';
 
 /** Main entry page. Loads a list of Git repos and parse their data into a table. */
 @Component({
@@ -12,3 +13,14 @@ export class ListComponent {
         this.reposDetails = 'Details change after click';
     }
 }
+
+@NgModule({
+    declarations: [
+      ListComponent,
+    ],
+    imports: [
+        MatButtonModule,
+    ],
+    providers: [ListComponent],
+  })
+  export class ListComponentModule { }
