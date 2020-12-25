@@ -15,7 +15,7 @@ export interface Repo {
     id: string;
     name: string;
     full_name: string;
-    owner: RepoOwner,
+    owner: RepoOwner;
     html_url: string;
     description: string;
     url: string;

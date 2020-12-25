@@ -1,7 +1,9 @@
 import { Component, NgModule } from "@angular/core";
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { ListReposResponse, ReposService } from "../api/repos.service";
 import { PanelLayoutModule } from "../components/panel.layout";
+import { getReposListModel, Repo } from '../model/repos';
+import { map } from 'rxjs/operators';
 
 /** Main entry page. Loads a list of Git repos and parse their data into a table. */
 @Component({
@@ -13,9 +15,11 @@ export class ListComponent {
     constructor(private readonly reposService: ReposService) {}
 
     handleButtonClick() {
-        this.reposService.listRepos().subscribe((results: ListReposResponse) => {
-            this.reposDetails = `${results.total_count} - ${results.items[0].name}`;
-        });
+        this.reposService.listRepos()
+            .pipe(map((response: ListReposResponse) => getReposListModel(response)))
+            .subscribe((repos: Array<Repo>) => {
+                this.reposDetails = `${repos.length} - ${repos[0].name}`;
+            });
     }
 }
 
