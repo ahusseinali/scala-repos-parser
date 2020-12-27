@@ -11,6 +11,7 @@ import { ReposDataSource } from "../model/repos.datasource";
 /** Main entry page. Loads a list of Git repos and parse their data into a table. */
 @Component({
     templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements AfterViewInit {
     readonly reposListColumns: string[] = ['name', 'owner', 'starcount'];

@@ -33,6 +33,20 @@ $scala-repos-parser-theme: mat-light-theme((
 // that you are using.
 @include angular-material-theme($scala-repos-parser-theme);
 
+// mixin to specify width of table column based on column name.
+@mixin mat-table-columns($columns) {
+  .mat-column-
+  {
+    @each $colName, $props in $columns {
+      $width: map-get($props, 'width');
+      &#{$colName} {
+        flex: $width;
+        min-width: $width;
+      }  
+    }
+  }
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
@@ -40,4 +54,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .text-center {
   text-align: center;
+}
+
+.fill {
+  width: 100%;
 }

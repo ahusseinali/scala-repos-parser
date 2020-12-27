@@ -1,0 +1,10 @@
+@import '../../styles.scss';
+
+@include mat-table-columns((
+    name: (width: '50%'),
+    owner: (width: '30%'),
+    starcount: (width: '20%')
+));
+
+
+
