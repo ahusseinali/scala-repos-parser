@@ -4,7 +4,7 @@
         mat-raised-button
         color="primary"
         class="test-list-loader-btn"
-        (click)="handleButtonClick()">
+        (click)="loadPageData()">
         Load Git Repos
     </button>
     
@@ -32,6 +32,10 @@
           <tr mat-row *matRowDef="let row; columns: reposListColumns;"></tr>
         </table>
       
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="10"></mat-paginator>
+        <mat-paginator
+            [pageSizeOptions]="[5, 10, 20]"
+            [pageSize]="5"
+            [length]="(reposDataSource.reposCount$ | async)">
+        </mat-paginator>
       </div>
 </panel-layout>

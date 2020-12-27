@@ -39,9 +39,9 @@ export class ReposService {
         'https://api.github.com/search/repositories?q=apache+language:scala';
     constructor(private readonly httpClient: HttpClient) {}
 
-    listRepos(pageSize = 10, pageNumber = 1): Observable<ListReposResponse> {
+    listRepos(pageSize: number, pageNumber: number): Observable<ListReposResponse> {
         return this.httpClient.get<ListReposResponse>(
-            `${this.apiUrl}&per_page=${pageNumber}&page=${pageSize}`,
+            `${this.apiUrl}&per_page=${pageSize}&page=${pageNumber}`,
             {observe: 'body', responseType: 'json'},
         );
     }

@@ -4,24 +4,36 @@ import { BehaviorSubject, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { ListReposResponse, ReposService } from "../api/repos.service";
-import { getReposListModel, Repo } from "./repos";
+import { ReposList, Repo } from "./repos";
 
+/** DataSource implementation for fetching and serving repos list to UI table. */
 export class ReposDataSource implements DataSource<Repo> {
-    private reposSubject = new BehaviorSubject<Array<Repo>>([]);
+    private repos$ = new BehaviorSubject<Array<Repo>>([]);
+    public reposCount$ = new BehaviorSubject<number>(0);
 
     constructor(private reposService: ReposService) {}
 
+    /** Overrides DataSource connect method. Triggerred by Material Table to load data. */
     connect (collectionViewer: CollectionViewer): Observable<Array<Repo>> {
-        return this.reposSubject.asObservable();
+        return this.repos$.asObservable();
     }
 
+    /**
+     * Overrides DataSource disconnect method. Triggerred by Material Table when component is
+     * destroyed.
+     */
     disconnect (collectionViewer: CollectionViewer): void {
-        this.reposSubject.complete();
+        this.repos$.complete();
+        this.reposCount$.complete();
     }
 
-    loadRepos (pageSize = 10, pageNumber = 1) {
+    /** Triggerred on Material Table page information change (page size or page number). */
+    loadRepos (pageSize = 5, pageNumber = 1) {
         this.reposService.listRepos(pageSize, pageNumber).pipe(
-            map((response: ListReposResponse) => getReposListModel(response))
-        ).subscribe(repos => this.reposSubject.next(repos));
+            map((response: ListReposResponse) => ReposList.fromApiModel(response))
+        ).subscribe(reposList => {
+            this.reposCount$.next(reposList.totalCount);
+            this.repos$.next(reposList.repos);
+        });
     }
 }

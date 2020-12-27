@@ -1,9 +1,18 @@
 import {ListReposResponse, Repo as ApiRepo} from '../api/repos.service';
 
-export function getReposListModel(listResponse: ListReposResponse): Array<Repo> {
-    return listResponse.items.map(item => Repo.fromApiModel(item));
+/** UI Model representing the list of repos. */
+export class  ReposList {
+    private constructor(readonly totalCount: number, readonly repos: Array<Repo>) {}
+
+    static fromApiModel(response: ListReposResponse): ReposList {
+        return new ReposList(
+            response.total_count,
+            response.items.map(item => Repo.fromApiModel(item)),
+        );
+    }
 }
 
+/** UI model representing a single Repo. */
 export class Repo {
     private constructor(
         readonly id: string,

@@ -1,3 +1,4 @@
+import {CommonModule} from '@angular/common';
 import { AfterViewInit, Component, NgModule, ViewChild } from "@angular/core";
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table'
@@ -21,11 +22,6 @@ export class ListComponent implements AfterViewInit {
         this.reposDataSource = new ReposDataSource(reposService);
     }
 
-    handleButtonClick() {
-        // Loading initial page of repos.
-        this.reposDataSource.loadRepos();
-    }
-
     ngAfterViewInit() {
         // Triggers loading new page of data on page changes.
         this.paginator.page
@@ -34,8 +30,9 @@ export class ListComponent implements AfterViewInit {
             });
     }
 
+    /** Loads a single page of data. */
     loadPageData() {
-        this.reposDataSource.loadRepos(this.paginator.pageSize, this.paginator.pageIndex);
+        this.reposDataSource.loadRepos(this.paginator.pageSize, this.paginator.pageIndex + 1);
     }
 }
 
@@ -44,6 +41,7 @@ export class ListComponent implements AfterViewInit {
       ListComponent,
     ],
     imports: [
+        CommonModule,
         MatButtonModule,
         MatPaginatorModule,
         MatTableModule,
