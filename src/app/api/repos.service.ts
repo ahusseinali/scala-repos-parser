@@ -35,11 +35,13 @@ export interface ListReposResponse {
     providedIn: 'root',
 })
 export class ReposService {
+    private readonly apiUrl =
+        'https://api.github.com/search/repositories?q=apache+language:scala';
     constructor(private readonly httpClient: HttpClient) {}
 
-    listRepos(): Observable<ListReposResponse> {
+    listRepos(pageSize = 10, pageNumber = 1): Observable<ListReposResponse> {
         return this.httpClient.get<ListReposResponse>(
-            'https://api.github.com/search/repositories?q=apache+language:scala',
+            `${this.apiUrl}&per_page=${pageNumber}&page=${pageSize}`,
             {observe: 'body', responseType: 'json'},
         );
     }
