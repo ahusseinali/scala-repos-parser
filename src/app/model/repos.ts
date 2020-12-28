@@ -15,7 +15,7 @@ export class  ReposList {
 /** UI model representing a single Repo. */
 export class Repo {
     private constructor(
-        readonly id: string,
+        readonly id: number,
         readonly name: string,
         readonly fullName: string,
         readonly htmlUrl: string,

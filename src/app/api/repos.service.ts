@@ -12,7 +12,7 @@ export interface RepoOwner {
 
 /** API model representation of Repo information. */
 export interface Repo {
-    id: string;
+    id: number;
     name: string;
     full_name: string;
     owner: RepoOwner;
