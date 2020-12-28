@@ -3,7 +3,6 @@ import { ListComponent, ListComponentModule } from './list.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatButtonHarness } from '@angular/material/button/testing';
 import { ReposService } from '../api/repos.service';
 import { of } from 'rxjs';
 import { REPOS_API_RESPONSE } from '../testing/test.data';
