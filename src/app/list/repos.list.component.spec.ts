@@ -1,5 +1,7 @@
+import 'jest';
+
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ListComponent, ListComponentModule } from './list.component';
+import { ReposListComponent, ReposListComponentModule } from './repos.list.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -11,53 +13,54 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ListComponent', () => {
     let loader: HarnessLoader;
-    let mockService: jasmine.SpyObj<ReposService>;
-    let fixture: ComponentFixture<ListComponent>;
+    let mockService: {listRepos: jest.Mock};
+    let fixture: ComponentFixture<ReposListComponent>;
 
     const page = {
-        getLoadButtonText: (fixture: ComponentFixture<ListComponent>) => {
+        getLoadButtonText: (fixture: ComponentFixture<ReposListComponent>) => {
             return fixture.debugElement.query(By.css('.test-list-loader-btn'))
                 .nativeElement.textContent.trim();
         },
 
-        clickLoadButton: (fixture: ComponentFixture<ListComponent>) => {
+        clickLoadButton: (fixture: ComponentFixture<ReposListComponent>) => {
             fixture.debugElement.query(By.css('.test-list-loader-btn'))
                 .triggerEventHandler('click', null);
         },
 
-        getTableHeader: (fixture: ComponentFixture<ListComponent>) => {
+        getTableHeader: (fixture: ComponentFixture<ReposListComponent>) => {
             return fixture.debugElement.queryAll(By.css('.mat-header-cell'))
                 .map(element => element.nativeElement.textContent.trim());
         },
 
-        getTableColumn: (fixture: ComponentFixture<ListComponent>, columnName: string) => {
+        getTableColumn: (fixture: ComponentFixture<ReposListComponent>, columnName: string) => {
             return fixture.debugElement.queryAll(By.css(`td.mat-column-${columnName}`))
                 .map(element => element.nativeElement.textContent.trim());
         },
 
-        clickNextPage: (fixture: ComponentFixture<ListComponent>) => {
+        clickNextPage: (fixture: ComponentFixture<ReposListComponent>) => {
             fixture.debugElement.query(By.css('button.mat-paginator-navigation-next'))
                 .triggerEventHandler('click', null);
         },
     };
     
     beforeEach(async () => {
-        mockService = jasmine.createSpyObj('reposService', ['listRepos']);
-        mockService.listRepos.and.returnValue(of(REPOS_API_RESPONSE));
+        mockService = {
+            listRepos: jest.fn(),
+        }
+        mockService.listRepos.mockReturnValue(of(REPOS_API_RESPONSE));
         await TestBed.configureTestingModule({
             imports: [
-                ListComponentModule,
+                ReposListComponentModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
             ],
-            declarations: [ListComponent],
             providers: [
                 {provide: ReposService, useValue: mockService},
             ],
         })
         .compileComponents();
         
-        fixture = TestBed.createComponent(ListComponent);
+        fixture = TestBed.createComponent(ReposListComponent);
         loader = TestbedHarnessEnvironment.loader(fixture);
         fixture.detectChanges();
     });

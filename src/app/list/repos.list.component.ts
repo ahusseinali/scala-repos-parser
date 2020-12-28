@@ -13,7 +13,7 @@ import { ReposDataSource } from "../model/repos.datasource";
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements AfterViewInit {
+export class ReposListComponent implements AfterViewInit {
     readonly reposListColumns: string[] = ['name', 'owner', 'starcount'];
     readonly reposDataSource: ReposDataSource;
 
@@ -39,7 +39,7 @@ export class ListComponent implements AfterViewInit {
 
 @NgModule({
     declarations: [
-      ListComponent,
+      ReposListComponent,
     ],
     imports: [
         CommonModule,
@@ -48,6 +48,6 @@ export class ListComponent implements AfterViewInit {
         MatTableModule,
         PanelLayoutModule,
     ],
-    providers: [ListComponent],
+    providers: [ReposListComponent],
   })
-  export class ListComponentModule { }
+  export class ReposListComponentModule { }

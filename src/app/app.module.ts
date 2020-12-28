@@ -8,7 +8,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListComponentModule } from './list/list.component';
+import { ReposListComponentModule } from './list/repos.list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule,
     BrowserModule,
     HttpClientModule,
-    ListComponentModule,
+    ReposListComponentModule,
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
