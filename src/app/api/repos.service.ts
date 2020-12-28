@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { Observable } from "rxjs";
 
 /** API model represnetation for Repo Ower informaton. */
@@ -37,7 +37,7 @@ export interface ListReposResponse {
 export class ReposService {
     private readonly apiUrl =
         'https://api.github.com/search/repositories?q=apache+language:scala';
-    constructor(private readonly httpClient: HttpClient) {}
+    constructor(@Inject(HttpClient) private readonly httpClient: HttpClient) {}
 
     listRepos(pageSize: number, pageNumber: number): Observable<ListReposResponse> {
         return this.httpClient.get<ListReposResponse>(

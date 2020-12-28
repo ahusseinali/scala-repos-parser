@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import { AfterViewInit, Component, NgModule, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, Inject, NgModule, ViewChild } from "@angular/core";
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -19,7 +19,7 @@ export class ListComponent implements AfterViewInit {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    constructor(reposService: ReposService) {
+    constructor(@Inject(ReposService) reposService: ReposService) {
         this.reposDataSource = new ReposDataSource(reposService);
     }
 
