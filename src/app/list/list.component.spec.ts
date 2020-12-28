@@ -21,7 +21,7 @@ describe('ListComponent', () => {
         },
 
         clickLoadButton: (fixture: ComponentFixture<ListComponent>) => {
-            return fixture.debugElement.query(By.css('.test-list-loader-btn'))
+            fixture.debugElement.query(By.css('.test-list-loader-btn'))
                 .triggerEventHandler('click', null);
         },
 
@@ -33,7 +33,12 @@ describe('ListComponent', () => {
         getTableColumn: (fixture: ComponentFixture<ListComponent>, columnName: string) => {
             return fixture.debugElement.queryAll(By.css(`td.mat-column-${columnName}`))
                 .map(element => element.nativeElement.textContent.trim());
-        }
+        },
+
+        clickNextPage: (fixture: ComponentFixture<ListComponent>) => {
+            fixture.debugElement.query(By.css('button.mat-paginator-navigation-next'))
+                .triggerEventHandler('click', null);
+        },
     };
     
     beforeEach(async () => {
@@ -72,6 +77,16 @@ describe('ListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(mockService.listRepos).toHaveBeenCalledWith(5, 1);
+    }));
+
+    it ('should call API with next page when next button is clicked', fakeAsync(() => {
+        page.clickLoadButton(fixture);
+        tick();
+        fixture.detectChanges();
+        page.clickNextPage(fixture);
+        tick();
+        fixture.detectChanges();
+        expect(mockService.listRepos).toHaveBeenCalledWith(5, 2);
     }));
 
     it ('should load data into table upon button click', fakeAsync(() => {
